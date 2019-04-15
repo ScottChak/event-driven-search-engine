@@ -1,0 +1,46 @@
+@page "/articles"
+
+@using SearchEngine.Blog.Domain
+@using SearchEngine.Blog.Interfaces
+
+@inject ISearchArticles searchArticlesService
+
+<h1>Search Articles forecast</h1>
+
+@if (articles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>Publication Date (UTC)</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in articles)
+            {
+                <tr>
+                    <td>@article.Author</td>
+                    <td>@article.Title</td>
+                    <td>@article.PublicationUtcDate</td>
+                    <td>@article.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    IEnumerable<Article> articles;
+
+    protected override async Task OnInitAsync()
+    {
+        articles = await searchArticlesService.GetArticlesAsync();
+    }
+}
