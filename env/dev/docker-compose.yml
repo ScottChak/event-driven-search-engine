@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mongo:
+    image: elasticsearch:6.7.1
+    ports:
+      - 9200:9200
+    networks:
+      - default-network
+
+networks:
+  default-network:

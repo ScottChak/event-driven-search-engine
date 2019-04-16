@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Blog.Web.Services
 {
-    public class StaticArticleSummarySearchService : IArticleSummarySearchService
+    public class StaticSearchArticleSummaryService : ISearchArticleSummariesService
     {
-        public StaticArticleSummarySearchService()
+        public StaticSearchArticleSummaryService()
         {
             var now = DateTime.UtcNow;
 

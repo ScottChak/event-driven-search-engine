@@ -3,13 +3,17 @@
 @using SearchEngine.Blog.Domain
 @using SearchEngine.Blog.Interfaces
 
-@inject IArticleSummarySearchService articleSummarySearchService
+@inject ISearchArticleSummariesService searchArticleSummariesService
 
 <h1>Search Articles forecast</h1>
 
-@if (articleSummaries == null)
+@if (loading)
 {
     <p><em>Loading...</em></p>
+}
+else if (articleSummaries == null || articleSummaries.Count() == 0)
+{
+    <p><em>No articles found</em></p>
 }
 else
 {
@@ -37,10 +41,25 @@ else
 }
 
 @functions {
+    bool loading = false;
     IEnumerable<ArticleSummary> articleSummaries;
-    
+
     protected override async Task OnInitAsync()
     {
-        articleSummaries = await articleSummarySearchService.SearchArticleSummariesAsync(string.Empty).ConfigureAwait(false);
+        await SearchArticleSummaries();
+    }
+
+    private async Task SearchArticleSummaries()
+    {
+        loading = true;
+
+        await Task.WhenAll(
+            Task.Factory.StartNew(async () =>
+            {
+                articleSummaries = await searchArticleSummariesService.SearchArticleSummariesAsync(string.Empty);
+            }),
+            Task.Delay(5000));
+
+        loading = false;
     }
 }

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SearchEngine.Blog\SearchEngine.Blog.csproj" />
+    <ProjectReference Include="..\SearchEngine.Blog.ElasticSearch\SearchEngine.Blog.ElasticSearch.csproj" />
   </ItemGroup>
 
 </Project>

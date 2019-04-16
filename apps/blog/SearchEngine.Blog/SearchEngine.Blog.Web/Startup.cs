@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SearchEngine.Blog.ElasticSearch;
 using SearchEngine.Blog.Interfaces;
 using SearchEngine.Blog.Web.Components;
-using SearchEngine.Blog.Web.Services;
+using System;
 
 namespace SearchEngine.Blog.Web
 {
@@ -17,7 +18,8 @@ namespace SearchEngine.Blog.Web
             services.AddMvc().AddNewtonsoftJson();
             services.AddRazorComponents();
 
-            services.AddSingleton<IArticleSummarySearchService>(p => new StaticArticleSummarySearchService());
+            //services.AddSingleton<ISearchArticleSummariesService>(p => new StaticSearchArticleSummaryService());
+            services.AddSingleton<ISearchArticleSummariesService>(p => new ElasticSearchArticleSummariesService(new Uri("http://localhost:9200"), "article-summary-index"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
