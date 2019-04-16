@@ -2,7 +2,7 @@
 
 namespace SearchEngine.Blog.Domain
 {
-    public class Article
+    public class ArticleSummary
     {
         public Guid Id { get; set; }
 

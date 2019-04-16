@@ -1,13 +1,13 @@
-@page "/articles"
+@page "/search"
 
 @using SearchEngine.Blog.Domain
 @using SearchEngine.Blog.Interfaces
 
-@inject ISearchArticles searchArticlesService
+@inject IArticleSummarySearchService articleSummarySearchService
 
 <h1>Search Articles forecast</h1>
 
-@if (articles == null)
+@if (articleSummaries == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -23,13 +23,13 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var article in articles)
+            @foreach (var articleSummary in articleSummaries)
             {
                 <tr>
-                    <td>@article.Author</td>
-                    <td>@article.Title</td>
-                    <td>@article.PublicationUtcDate</td>
-                    <td>@article.Description</td>
+                    <td>@articleSummary.Author</td>
+                    <td>@articleSummary.Title</td>
+                    <td>@articleSummary.PublicationUtcDate</td>
+                    <td>@articleSummary.Description</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +37,10 @@ else
 }
 
 @functions {
-    IEnumerable<Article> articles;
-
+    IEnumerable<ArticleSummary> articleSummaries;
+    
     protected override async Task OnInitAsync()
     {
-        articles = await searchArticlesService.GetArticlesAsync();
+        articleSummaries = await articleSummarySearchService.SearchArticleSummariesAsync(string.Empty).ConfigureAwait(false);
     }
 }

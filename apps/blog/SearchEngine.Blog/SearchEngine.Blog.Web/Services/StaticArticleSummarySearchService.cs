@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Blog.Web.Services
 {
-    public class StaticSearchArticles : ISearchArticles
+    public class StaticArticleSummarySearchService : IArticleSummarySearchService
     {
-        public StaticSearchArticles()
+        public StaticArticleSummarySearchService()
         {
             var now = DateTime.UtcNow;
 
             _articles = new[]
             {
-                new Article
+                new ArticleSummary
                 {
                     Id = Guid.NewGuid(),
                     CreationUtcDate = now,
@@ -27,8 +27,8 @@ namespace SearchEngine.Blog.Web.Services
             };
         }
 
-        private readonly IEnumerable<Article> _articles;
+        private readonly IEnumerable<ArticleSummary> _articles;
 
-        public Task<IEnumerable<Article>> GetArticlesAsync() => Task.FromResult(_articles);
+        public Task<IEnumerable<ArticleSummary>> SearchArticleSummariesAsync(string searchTerm) => Task.FromResult(_articles);
     }
 }

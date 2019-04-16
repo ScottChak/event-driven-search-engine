@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace SearchEngine.Blog.Interfaces
 {
-    public interface ISearchArticles
+    public interface IArticleSummarySearchService
     {
-        Task<IEnumerable<Article>> GetArticlesAsync();
+        Task<IEnumerable<ArticleSummary>> SearchArticleSummariesAsync(string searchTerm);
     }
 }

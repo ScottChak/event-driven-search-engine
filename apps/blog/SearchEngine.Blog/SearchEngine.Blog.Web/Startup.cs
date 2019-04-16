@@ -17,7 +17,7 @@ namespace SearchEngine.Blog.Web
             services.AddMvc().AddNewtonsoftJson();
             services.AddRazorComponents();
 
-            services.AddSingleton<ISearchArticles>(p => new StaticSearchArticles());
+            services.AddSingleton<IArticleSummarySearchService>(p => new StaticArticleSummarySearchService());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
