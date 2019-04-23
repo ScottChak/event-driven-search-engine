@@ -1,0 +1,35 @@
+{
+  "name": "article-event-elasticsearch-projector",
+  "version": "1.0.0",
+  "description": "Event processor for creating projecting Article events into ElasticSearch",
+  "author": "Ewan \"ScottChak\" BURNS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ScottChak/event-driven-search-engine.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "10.15.3"
+  },
+  "scripts": {
+    "postinstall": "npm run build",
+    "start": "node .dist",
+    "build": "grunt build",
+    "watch": "grunt watch",
+    "debug": "nodemon --exec \"node .dist\" --watch .dist",
+    "dev": "npm run build && concurrently \"npm run debug\" \"npm run watch\"",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.3"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.5.11",
+    "concurrently": "^4.1.0",
+    "grunt": "^1.0.4",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-ts": "^6.0.0-beta.22",
+    "nodemon": "^1.18.11",
+    "typescript": "^3.4.4"
+  }
+}

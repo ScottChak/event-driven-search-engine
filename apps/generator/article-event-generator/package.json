@@ -1,0 +1,17 @@
+{
+  "name": "article-event-generator",
+  "version": "1.0.0",
+  "description": "Event generator for creating fake articles",
+  "author": "Ewan \"ScottChak\" BURNS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ScottChak/event-driven-search-engine.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "10.15.3"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.3"
+  }
+}
