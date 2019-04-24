@@ -2,15 +2,28 @@ version: '3'
 services:
   elasticsearch:
     image: elasticsearch:6.7.1
+    env_file: ./elasticsearch/.env
     ports:
       - 9200:9200
     networks:
       - default-network
+
+  dejavu:
+    image: appbaseio/dejavu:3.2.3
+    env_file: ./dejavu/.env
+    ports:
+      - 1358:1358
+    networks:
+      - default-network
+    depends_on:
+      - elasticsearch
   
   rabbitmq:
-    image: rabbitmq:3.7.14-alpine
+    image: rabbitmq:3.7.14-management-alpine
+    env_file: ./rabbitmq/.env
     ports:
       - 5672:5672
+      - 15672:15672
     networks:
       - default-network
 
