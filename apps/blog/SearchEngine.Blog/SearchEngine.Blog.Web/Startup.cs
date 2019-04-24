@@ -19,7 +19,7 @@ namespace SearchEngine.Blog.Web
             services.AddRazorComponents();
 
             //services.AddSingleton<ISearchArticleSummariesService>(p => new StaticSearchArticleSummaryService());
-            services.AddSingleton<ISearchArticleSummariesService>(p => new ElasticSearchArticleSummariesService(new Uri("http://localhost:9200"), "article-summary-index"));
+            services.AddSingleton<ISearchArticleSummariesService>(p => new ElasticSearchArticleSummariesService(new Uri("http://localhost:9200"), "article-summaries"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
