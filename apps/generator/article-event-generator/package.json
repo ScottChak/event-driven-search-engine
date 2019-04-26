@@ -12,6 +12,7 @@
     "node": "10.15.3"
   },
   "dependencies": {
-    "amqplib": "^0.5.3"
+    "amqplib": "^0.5.3",
+    "uuid": "^3.3.2"
   }
 }
