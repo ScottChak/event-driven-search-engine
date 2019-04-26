@@ -8,7 +8,7 @@ let endpoint = {
   username: "user",
   password: "user"
 };
-let queueName = "articles";
+let queueName = "article-summaries";
 let connection = undefined;
 let channel = undefined;
 

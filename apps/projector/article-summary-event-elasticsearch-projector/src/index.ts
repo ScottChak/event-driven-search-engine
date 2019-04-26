@@ -7,7 +7,7 @@ let endpoint: amqp.Options.Connect = {
   username: "user",
   password: "user"
 };
-let queueName: string = "articles";
+let queueName: string = "article-summaries";
 let connection: amqp.Connection = undefined;
 let channel: amqp.Channel = undefined;
 

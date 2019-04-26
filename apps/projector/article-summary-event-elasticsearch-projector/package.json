@@ -1,7 +1,7 @@
 {
-  "name": "article-event-elasticsearch-projector",
+  "name": "article-summary-event-elasticsearch-projector",
   "version": "1.0.0",
-  "description": "Event processor for creating projecting Article events into ElasticSearch",
+  "description": "Event processor for creating projecting Article Summary events into ElasticSearch",
   "author": "Ewan \"ScottChak\" BURNS",
   "repository": {
     "type": "git",
