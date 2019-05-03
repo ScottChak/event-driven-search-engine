@@ -1,45 +1,35 @@
-import * as amqp from "amqplib";
+import { ArticleSummary } from "./domain";
+import { IQueueConsumer } from "./queuing";
+import { RabbitMQQueueMessageHandler, RabbitMQQueueConsumer } from "./rabbitmq";
 
-let endpoint: amqp.Options.Connect = {
-  hostname: "localhost",
-  port: 5672,
-  protocol: "amqp",
-  username: "user",
-  password: "user"
-};
+let hostname: string = "localhost";
+let port: number = 5672;
+let protocol: string = "amqp";
+let username: string = "user";
+let password: string = "user";
 let queueName: string = "article-summaries";
-let connection: amqp.Connection = undefined;
-let channel: amqp.Channel = undefined;
 
-class ArticleSummary {
-  id: string;
-  creationUtcDate: Date;
-  modificationUtcDate: Date;
-  author: string;
-  title: string;
-  publicationUtcDate: Date;
-  description: string;
-}
-
-async function ReceiveAsync() {
+async function RunAsync(): Promise<void> {
   try {
-    connection = await amqp.connect(endpoint);
-    channel = await connection.createChannel();
-
-    await channel.assertQueue(queueName, { durable: false });
-    await channel.consume(
-      queueName,
-      (msg: amqp.Message) => {
-        let articleSummary: ArticleSummary = JSON.parse(msg.content.toString());
-        console.log(articleSummary);
-      },
-      {
-        noAck: true
+    let messageHandler: RabbitMQQueueMessageHandler<ArticleSummary> = new RabbitMQQueueMessageHandler(
+      async (content: ArticleSummary) => {
+        console.log(content);
       }
     );
+    
+    let consumer: IQueueConsumer = new RabbitMQQueueConsumer(
+      hostname,
+      port,
+      protocol,
+      username,
+      password,
+      queueName,
+      messageHandler
+    );
+    await consumer.AttachAsync();
   } catch (err) {
     console.log(err);
   }
 }
 
-ReceiveAsync();
+RunAsync();
