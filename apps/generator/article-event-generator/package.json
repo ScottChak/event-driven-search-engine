@@ -1,7 +1,7 @@
 {
-  "name": "article-summary-event-generator",
+  "name": "article-event-generator",
   "version": "1.0.0",
-  "description": "Event generator for creating fake Article Summaries",
+  "description": "Event generator for creating fake Articles",
   "author": "Ewan \"ScottChak\" BURNS",
   "repository": {
     "type": "git",

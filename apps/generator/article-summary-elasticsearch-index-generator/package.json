@@ -1,7 +1,7 @@
 {
-  "name": "article-summaries-index-generator",
+  "name": "article-summary-elasticsearch-index-generator",
   "version": "1.0.0",
-  "description": "Elasticsearch index generator for searching article summaries",
+  "description": "Elasticsearch Index generator for searching Article Summaries",
   "author": "Ewan \"ScottChak\" BURNS",
   "repository": {
     "type": "git",
