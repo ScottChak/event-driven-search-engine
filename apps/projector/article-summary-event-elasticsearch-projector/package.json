@@ -21,6 +21,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^6.7.0-rc.2",
     "amqplib": "^0.5.3"
   },
   "devDependencies": {
