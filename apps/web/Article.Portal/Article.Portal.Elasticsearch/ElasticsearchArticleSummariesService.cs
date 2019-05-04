@@ -1,17 +1,17 @@
-﻿using Nest;
-using SearchEngine.Blog.Domain;
-using SearchEngine.Blog.Interfaces;
+﻿using Article.Portal.Business.Services.SearchArticleSummaries;
+using Article.Portal.Domain;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SearchEngine.Blog.ElasticSearch
+namespace Article.Portal.Elasticsearch
 {
-    public class ElasticSearchArticleSummariesService : ISearchArticleSummariesService
+    public class ElasticsearchArticleSummariesService : ISearchArticleSummariesService
     {
         private readonly ElasticClient _client;
 
-        public ElasticSearchArticleSummariesService(Uri nodeUri, string defaultIndex)
+        public ElasticsearchArticleSummariesService(Uri nodeUri, string defaultIndex)
         {
             var connectionSettings = new ConnectionSettings(nodeUri);
             connectionSettings.DefaultIndex(defaultIndex);
@@ -25,15 +25,14 @@ namespace SearchEngine.Blog.ElasticSearch
             {
                 From = 0,
                 Size = 10,
-                Query = new MultiMatchQuery
-                {
-                    Query = searchTerm,
-                    Fields = new[] { new Field("Title"), new Field("Description") }
-                }
+                //Query = new MultiMatchQuery
+                //{
+                //    Query = searchTerm,
+                //    Fields = new[] { new Field("Title"), new Field("Description") }
+                //}
             };
 
             var response = await _client.SearchAsync<ArticleSummary>(request);
-
             return response.Documents;
         }
     }

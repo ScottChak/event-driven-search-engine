@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SearchEngine.Blog\SearchEngine.Blog.csproj" />
+    <ProjectReference Include="..\Article.Portal\Article.Portal.csproj" />
   </ItemGroup>
 
 </Project>

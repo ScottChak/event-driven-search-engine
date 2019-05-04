@@ -1,8 +1,8 @@
-﻿using SearchEngine.Blog.Domain;
+﻿using Article.Portal.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SearchEngine.Blog.Interfaces
+namespace Article.Portal.Business.Services.SearchArticleSummaries
 {
     public interface ISearchArticleSummariesService
     {

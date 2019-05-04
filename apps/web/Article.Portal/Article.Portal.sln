@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Portal", "Article.Portal\Article.Portal.csproj", "{B99FC5B1-F910-4BC1-9B54-E965FF50A6D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Article.Portal", "Article.Portal\Article.Portal.csproj", "{B99FC5B1-F910-4BC1-9B54-E965FF50A6D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Portal.Web", "Article.Portal.Web\Article.Portal.Web.csproj", "{CAF41B30-82B8-4C15-82A7-147C877F9270}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Article.Portal.Web", "Article.Portal.Web\Article.Portal.Web.csproj", "{CAF41B30-82B8-4C15-82A7-147C877F9270}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Article.Portal.Elasticsearch", "Article.Portal.Elasticsearch\Article.Portal.Elasticsearch.csproj", "{F7BF3AF9-4176-46F5-856D-722BE9D8534F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CAF41B30-82B8-4C15-82A7-147C877F9270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAF41B30-82B8-4C15-82A7-147C877F9270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAF41B30-82B8-4C15-82A7-147C877F9270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BF3AF9-4176-46F5-856D-722BE9D8534F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BF3AF9-4176-46F5-856D-722BE9D8534F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BF3AF9-4176-46F5-856D-722BE9D8534F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BF3AF9-4176-46F5-856D-722BE9D8534F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

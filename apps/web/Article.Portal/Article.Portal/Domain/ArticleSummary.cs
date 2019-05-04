@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SearchEngine.Blog.Domain
+namespace Article.Portal.Domain
 {
     public class ArticleSummary
     {
