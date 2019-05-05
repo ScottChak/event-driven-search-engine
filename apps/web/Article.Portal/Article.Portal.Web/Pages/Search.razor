@@ -7,9 +7,13 @@
 
 <h1>Search Articles</h1>
 
-@if (loading)
+@if (searchingArticleSummaries)
 {
-    <p><em>Loading...</em></p>
+    <p><em>Searching ...</em></p>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p><em>Failed to search articles (@errorMessage) ...</em></p>
 }
 else if (articleSummaries == null || articleSummaries.Count() == 0)
 {
@@ -41,25 +45,31 @@ else
 }
 
 @functions {
-    bool loading = false;
+    bool searchingArticleSummaries = false;
+    string errorMessage = default(string);
+
     IEnumerable<ArticleSummary> articleSummaries;
 
     protected override async Task OnInitAsync()
     {
-        await SearchArticleSummaries();
+        await SearchArticleSummariesAsync();
     }
 
-    private async Task SearchArticleSummaries()
+    private async Task SearchArticleSummariesAsync()
     {
-        loading = true;
+        searchingArticleSummaries = true;
 
-        await Task.WhenAll(
-            Task.Factory.StartNew(async () =>
-            {
-                articleSummaries = await searchArticleSummariesService.SearchArticleSummariesAsync(string.Empty);
-            }),
-            Task.Delay(5000));
-
-        loading = false;
+        try
+        {
+            articleSummaries = await searchArticleSummariesService.SearchArticleSummariesAsync(string.Empty);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            searchingArticleSummaries = false;
+        }
     }
 }

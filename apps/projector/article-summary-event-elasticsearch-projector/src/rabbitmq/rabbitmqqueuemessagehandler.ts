@@ -10,7 +10,8 @@ export class RabbitMQQueueMessageHandler<TContent> implements IQueueMessageHandl
   }
 
   public async HandleAsync(message: amqp.Message): Promise<void> {
-    let content: TContent = JSON.parse(message.content.toString());
+    let stringContent: string = message.content.toString();
+    let content: TContent = JSON.parse(stringContent);
     await this._handleContentAsync(content);
   }
 }

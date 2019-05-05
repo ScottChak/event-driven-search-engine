@@ -1,5 +1,6 @@
 ﻿using Article.Portal.Business.Services.SearchArticleSummaries;
 using Article.Portal.Domain;
+using Article.Portal.Elasticsearch.Exceptions;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -21,19 +22,33 @@ namespace Article.Portal.Elasticsearch
 
         public async Task<IEnumerable<ArticleSummary>> SearchArticleSummariesAsync(string searchTerm)
         {
-            var request = new SearchRequest
+            try
             {
-                From = 0,
-                Size = 10,
-                //Query = new MultiMatchQuery
-                //{
-                //    Query = searchTerm,
-                //    Fields = new[] { new Field("Title"), new Field("Description") }
-                //}
-            };
+                var request = new SearchRequest
+                {
+                    From = 0,
+                    Size = 10,
+                    //Query = new MultiMatchQuery
+                    //{
+                    //    Query = searchTerm,
+                    //    Fields = new[] { new Field("Title"), new Field("Description") }
+                    //}
+                };
 
-            var response = await _client.SearchAsync<ArticleSummary>(request);
-            return response.Documents;
+                var response = await _client.SearchAsync<ArticleSummary>(request);
+
+                if (!response.IsValid)
+                {
+                    throw response.OriginalException ?? new ElasticsearchQueryFailedException($"Failed to connect to Elasticsearch server");
+                }
+
+                return response.Documents;
+            }
+
+            catch (Exception ex)
+            {
+                throw new ElasticsearchQueryFailedException($"Failed to query to Elasticsearch server", ex);
+            }
         }
     }
 }

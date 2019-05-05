@@ -1,4 +1,6 @@
 let uuid = require("uuid/v1");
+let moment = require("moment");
+
 let amqp = require("amqplib");
 
 let endpoint = {
@@ -34,10 +36,10 @@ async function SendAsync(articleSummary) {
 
 SendAsync({
   id: uuid(),
-  creationUtcDate: Date.now(),
-  modificationUtcDate: Date.now(),
+  creationUtcDate: moment.utc(),
+  modificationUtcDate: moment.utc(),
   author: "Fake Author",
   title: "Fake Article",
-  publicationUtcDate: Date.now(),
+  publicationUtcDate: moment.utc(),
   description: "Does not actually exist"
 });
