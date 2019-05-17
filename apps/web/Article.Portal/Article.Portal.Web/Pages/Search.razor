@@ -2,7 +2,9 @@
 
 @using Article.Portal.Domain
 @using Article.Portal.Business.Services.SearchArticleSummaries
+@using Microsoft.AspNetCore.Components
 
+@inject IUriHelper UriHelper
 @inject ISearchArticleSummariesService searchArticleSummariesService
 
 <h1>Search Articles</h1>
@@ -45,23 +47,23 @@ else
 }
 
 @functions {
-    bool searchingArticleSummaries = false;
-    string errorMessage = default(string);
+    private string searchTerm = default(string);
+
+    private bool searchingArticleSummaries = false;
+    private string errorMessage = default(string);
 
     IEnumerable<ArticleSummary> articleSummaries;
 
-    protected override async Task OnInitAsync()
-    {
-        await SearchArticleSummariesAsync();
-    }
-
     private async Task SearchArticleSummariesAsync()
     {
+        var uri = new Uri(UriHelper.GetAbsoluteUri());
+        searchTerm = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query).TryGetValue("term", out var type) ? type.First() : default(string);
+
         searchingArticleSummaries = true;
 
         try
         {
-            articleSummaries = await searchArticleSummariesService.SearchArticleSummariesAsync(string.Empty);
+            articleSummaries = await searchArticleSummariesService.SearchArticleSummariesAsync(searchTerm);
         }
         catch (Exception ex)
         {
@@ -71,5 +73,16 @@ else
         {
             searchingArticleSummaries = false;
         }
+    }
+
+    private async Task OnLocationChangedAsync(object sender, string location)
+    {
+        await SearchArticleSummariesAsync();
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        UriHelper.OnLocationChanged += async (s, l) => await OnLocationChangedAsync(s, l);
+        await SearchArticleSummariesAsync();
     }
 }
