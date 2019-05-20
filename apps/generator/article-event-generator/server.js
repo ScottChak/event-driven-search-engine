@@ -22,6 +22,16 @@ let articleSummaries = [
     title: "Fake Article",
     publicationUtcDate: moment.utc(),
     description: "Does not actually exist"
+  },
+  {
+    id: uuid(),
+    creationUtcDate: moment.utc(),
+    modificationUtcDate: moment.utc(),
+    author: "M.D. Boyer",
+    title: "Machine learning speeds modeling of experiments aimed at capturing fusion energy on Earth",
+    publicationUtcDate: moment("2019-05-17T10:00:00Z"),
+    description:
+      "Machine learning can help bring to Earth the clean fusion energy that lights the sun and stars. Researchers are using this form of artificial intelligence to create a model for rapid control of plasma -- the state of matter composed of free electrons and atomic nuclei, or ions -- that fuels fusion reactions."
   }
 ];
 
@@ -57,13 +67,15 @@ async function CloseAsync() {
   }
 }
 
-ConnectAsync().then(async function() {
-  await Promise.all(
-    articleSummaries.map(async function(articleSummary) {
-      await SendAsync(articleSummary);
-      return;
-    })
-  );
-
-  await CloseAsync();
-});
+ConnectAsync()
+  .then(async function() {
+    await Promise.all(
+      articleSummaries.map(async function(articleSummary) {
+        await SendAsync(articleSummary);
+        return;
+      })
+    );
+  })
+  .finally(async function() {
+    await CloseAsync();
+  });
