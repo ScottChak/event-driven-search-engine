@@ -1,6 +1,5 @@
 let uuid = require("uuid/v1");
 let moment = require("moment");
-
 let amqp = require("amqplib");
 
 let endpoint = {
@@ -13,6 +12,18 @@ let endpoint = {
 let queueName = "article-summaries";
 let connection = undefined;
 let channel = undefined;
+
+let articleSummaries = [
+  {
+    id: uuid(),
+    creationUtcDate: moment.utc(),
+    modificationUtcDate: moment.utc(),
+    author: "Fake Author",
+    title: "Fake Article",
+    publicationUtcDate: moment.utc(),
+    description: "Does not actually exist"
+  }
+];
 
 async function ConnectAsync() {
   try {
@@ -55,15 +66,11 @@ async function CloseAsync() {
 }
 
 ConnectAsync().then(async function() {
-  await SendAsync({
-    id: uuid(),
-    creationUtcDate: moment.utc(),
-    modificationUtcDate: moment.utc(),
-    author: "Fake Author",
-    title: "Fake Article",
-    publicationUtcDate: moment.utc(),
-    description: "Does not actually exist"
-  });
+  await Promise.all(
+    articleSummaries.map(async function(articleSummary) {
+      await SendAsync(articleSummary);
+    })
+  );
 
   await CloseAsync();
 });
