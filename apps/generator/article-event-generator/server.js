@@ -26,26 +26,14 @@ let articleSummaries = [
 ];
 
 async function ConnectAsync() {
-  try {
-    connection = await amqp.connect(endpoint);
-    channel = await connection.createChannel();
-    await channel.assertQueue(queueName, { durable: false });
-  } catch (err) {
-    console.log(err);
-  } finally {
-    if (channel) {
-      await channel.close();
-    }
-
-    if (connection) {
-      await connection.close();
-    }
-  }
+  connection = await amqp.connect(endpoint);
+  channel = await connection.createChannel();
+  await channel.assertQueue(queueName, { durable: false });
 }
 
 async function SendAsync(articleSummary) {
   try {
-    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(articleSummary)));
+    await channel.sendToQueue(queueName, Buffer.from(JSON.stringify(articleSummary)));
   } catch (err) {
     console.log(err);
   }
@@ -53,13 +41,17 @@ async function SendAsync(articleSummary) {
 
 async function CloseAsync() {
   try {
-    await channel.close();
+    if (channel !== undefined) {
+      await channel.close();
+    }
   } finally {
     channel = undefined;
   }
 
   try {
-    await connection.close();
+    if (connection !== undefined) {
+      await connection.close();
+    }
   } finally {
     connection = undefined;
   }
@@ -69,6 +61,7 @@ ConnectAsync().then(async function() {
   await Promise.all(
     articleSummaries.map(async function(articleSummary) {
       await SendAsync(articleSummary);
+      return;
     })
   );
 
