@@ -14,13 +14,11 @@ let queueName = "article-summaries";
 let connection = undefined;
 let channel = undefined;
 
-async function SendAsync(articleSummary) {
+async function ConnectAsync() {
   try {
     connection = await amqp.connect(endpoint);
     channel = await connection.createChannel();
-
     await channel.assertQueue(queueName, { durable: false });
-    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(articleSummary)));
   } catch (err) {
     console.log(err);
   } finally {
@@ -34,12 +32,38 @@ async function SendAsync(articleSummary) {
   }
 }
 
-SendAsync({
-  id: uuid(),
-  creationUtcDate: moment.utc(),
-  modificationUtcDate: moment.utc(),
-  author: "Fake Author",
-  title: "Fake Article",
-  publicationUtcDate: moment.utc(),
-  description: "Does not actually exist"
+async function SendAsync(articleSummary) {
+  try {
+    channel.sendToQueue(queueName, Buffer.from(JSON.stringify(articleSummary)));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function CloseAsync() {
+  try {
+    await channel.close();
+  } finally {
+    channel = undefined;
+  }
+
+  try {
+    await connection.close();
+  } finally {
+    connection = undefined;
+  }
+}
+
+ConnectAsync().then(async function() {
+  await SendAsync({
+    id: uuid(),
+    creationUtcDate: moment.utc(),
+    modificationUtcDate: moment.utc(),
+    author: "Fake Author",
+    title: "Fake Article",
+    publicationUtcDate: moment.utc(),
+    description: "Does not actually exist"
+  });
+
+  await CloseAsync();
 });
