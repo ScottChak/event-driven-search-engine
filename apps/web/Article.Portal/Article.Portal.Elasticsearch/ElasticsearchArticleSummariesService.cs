@@ -28,11 +28,11 @@ namespace Article.Portal.Elasticsearch
                 {
                     From = 0,
                     Size = 10,
-                    //Query = new MultiMatchQuery
-                    //{
-                    //    Query = searchTerm,
-                    //    Fields = new[] { new Field("Title"), new Field("Description") }
-                    //}
+                    Query = new MultiMatchQuery
+                    {
+                        Query = searchTerm,
+                        Fields = new[] { new Field("author"), new Field("title"), new Field("description") }
+                    }
                 };
 
                 var response = await _client.SearchAsync<ArticleSummary>(request);
